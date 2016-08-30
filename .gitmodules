@@ -1,0 +1,3 @@
+[submodule "ping-pong"]
+	path = ping-pong
+	url = https://github.com/FuriKuri/ping-pong
