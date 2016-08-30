@@ -53,21 +53,21 @@ Two services will be the client named ```ping``` and ```pong```. Both clients ca
 First of all we need to create an own network, which will be used by our services:
 
 ```
-docker network create --driver overlay --subnet 10.0.9.0/24 ping-pong-net
+$ docker network create --driver overlay --subnet 10.0.9.0/24 ping-pong-net
 ```
 
 Now we can start the services. (I needed to add ```--endpoint-mode dnsrr```. Without this option the network performance was horrible.)
 
 ```
-docker service create --replicas=2 --network=ping-pong-net --endpoint-mode dnsrr --name ping furikuri/rpi-ping-pong --hit-chance 85
-docker service create --replicas=2 --network=ping-pong-net --endpoint-mode dnsrr --name pong furikuri/rpi-ping-pong --hit-chance 85
-docker service create --replicas=2 --network=ping-pong-net --endpoint-mode dnsrr --name ping-pong-manager furikuri/rpi-ping-pong --mode server
+$ docker service create --replicas=2 --network=ping-pong-net --endpoint-mode dnsrr --name ping furikuri/rpi-ping-pong --hit-chance 85
+$ docker service create --replicas=2 --network=ping-pong-net --endpoint-mode dnsrr --name pong furikuri/rpi-ping-pong --hit-chance 85
+$ docker service create --replicas=2 --network=ping-pong-net --endpoint-mode dnsrr --name ping-pong-manager furikuri/rpi-ping-pong --mode server
 ```
 
 In addition we will start a simple proxy on every node. So every node will be able to serve the service, irrespective of whether or not the node has a running service instance of ```ping-pong-manager```.
 
 ```
-docker service create --mode=global --network=ping-pong-net --name ping-pong-proxy --publish 3000:3000 furikuri/rpi-ping-pong-proxy
+$docker service create --mode=global --network=ping-pong-net --name ping-pong-proxy --publish 3000:3000 furikuri/rpi-ping-pong-proxy
 ```
 
 All services use the service name and the service discovery mechanism form docker. For example the ```ping-pong-manager``` will do a GET request to ```http://pong:3000```.
