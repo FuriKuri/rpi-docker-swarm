@@ -1,0 +1,7 @@
+FROM armhf/node:5.3-slim
+
+COPY index.js /app/index.js
+
+EXPOSE 3000
+
+ENTRYPOINT ["node", "/app/index.js"]
