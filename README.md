@@ -23,7 +23,26 @@ $ ssh pirate@192.168.0.200
 ```
 
 ## Create cluster
+Just type the following command on the first RPI
+
+```
+$ docker swarm init
+```
+and let the other ones join the cluster (the complete command with your token should be printed after the ```docker swarm init```)
+
+```
+$ docker swarm join --token <swarm-token> 192.168.0.200:2377
+```
+
+After this all nodes should be listed with ```docker node ls```:
+
+```
+$ docker node ls
+ID                           HOSTNAME     STATUS  AVAILABILITY  MANAGER STATUS
+4whs5eu27bzxvp3766frrpk8c    moby-dock-3  Ready   Active
+6wz46d0uezvyq6ujm9qi707j5    moby-dock-2  Ready   Active
+7xfsvx083ds6syge3j5vk8gbk    moby-dock-4  Ready   Active
+8q2k9se39x9kbz508h9trwpuz *  moby-dock-1  Ready   Active        Leader
+```
 
 ## Start Services
-
-
