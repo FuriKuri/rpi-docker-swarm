@@ -1,7 +1,7 @@
 var http = require('http');
 
 var host = process.env.PROXY_HOST || 'ping-pong-manager';
-var port = process.env.PROXY_PORT || 8080;
+var port = process.env.PROXY_PORT || 3000;
 
 http.createServer(onRequest).listen(3000);
 
