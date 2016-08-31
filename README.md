@@ -1,6 +1,16 @@
 # Docker Swarm on Raspberry PI
 ![PI Cluster](https://github.com/FuriKuri/rpi-docker-swarm/raw/master/pi-cluster.jpg "PI Cluster")
 
+## Docker features to play with
+- [x] Installation
+- [x] Service deployment
+- [x] Service discovery
+- [ ] Rolling service update
+- [ ] Scale service
+- [ ] Drain a node
+- [ ] Inspect a service
+- [ ] Monitoring
+
 ## Preparations
 ### Install OS
 I used [HypriotOS](http://blog.hypriot.com/) in version 1.0.0. For an easy installation you can use [flash](https://github.com/hypriot/flash). Just insert your SD card and run the following command from your command line.
@@ -47,7 +57,7 @@ ID                           HOSTNAME     STATUS  AVAILABILITY  MANAGER STATUS
 ```
 
 ## Start Services
-Now let's start some services. For this I created a simple application written in Go. This application is a simplified verison of pong. We will start three services.
+Now let's start some services. For this I created a simple application written in Go. This application is a simplified version of *ping pong*. We will start three services.
 Two services will be the client named ```ping``` and ```pong```. Both clients can be request over HTTP and they will return ```HIT``` or ```MISS```, according as whether he hits the ball or not. The ```ping-pong-manager``` will request both clients until one of them returns ```MISS```.
 
 First of all we need to create an own network, which will be used by our services:
@@ -117,5 +127,5 @@ $ docker run -it -d -p 8080:8080 -e HOST=192.168.0.200 -v /var/run/docker.sock:/
 ![Ping Pong Services](https://github.com/FuriKuri/rpi-docker-swarm/raw/master/ping-pong.png "Ping Pong Services")
 
 ## Task List
-- [ ] Add a service for game score visualisation 
+- [ ] Add a service for game score visualisation
 - [ ] Add instance id in logs to differentiate the client responses
