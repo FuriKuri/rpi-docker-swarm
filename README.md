@@ -58,7 +58,7 @@ ID                           HOSTNAME     STATUS  AVAILABILITY  MANAGER STATUS
 
 ## Start Services
 Now let's start some services. For this I created a simple application written in Go. This application is a simplified version of *ping pong*. We will start three services.
-Two services will be the client named ```ping``` and ```pong```. Both clients can be request over HTTP and they will return ```HIT``` or ```MISS```, according as whether he hits the ball or not. The ```ping-pong-manager``` will request both clients until one of them returns ```MISS```.
+Two services will be the client named ```ping``` and ```pong```. Both clients can be request over HTTP and they will return ```HIT``` or ```MISS```, according as whether he hits the ball or not. The ```ping-pong-table``` will request both clients until one of them returns ```MISS```.
 
 First of all we need to create an own network, which will be used by our services:
 
@@ -71,16 +71,16 @@ Now we can start the services. (I needed to add ```--endpoint-mode dnsrr```. Wit
 ```
 $ docker service create --replicas=2 --network=ping-pong-net --endpoint-mode dnsrr --name ping furikuri/rpi-ping-pong --hit-chance 85
 $ docker service create --replicas=2 --network=ping-pong-net --endpoint-mode dnsrr --name pong furikuri/rpi-ping-pong --hit-chance 85
-$ docker service create --replicas=2 --network=ping-pong-net --endpoint-mode dnsrr --name ping-pong-manager furikuri/rpi-ping-pong --mode server
+$ docker service create --replicas=2 --network=ping-pong-net --endpoint-mode dnsrr --name ping-pong-table furikuri/rpi-ping-pong --mode server
 ```
 
-In addition we will start a simple proxy on every node. So every node will be able to serve the service, irrespective of whether or not the node has a running service instance of ```ping-pong-manager```.
+In addition we will start a simple proxy on every node. So every node will be able to serve the service, irrespective of whether or not the node has a running service instance of ```ping-pong-table```.
 
 ```
 $ docker service create --mode=global --network=ping-pong-net --name ping-pong-proxy --publish 3000:3000 furikuri/rpi-ping-pong-proxy
 ```
 
-All services use the service name and the service discovery mechanism form docker. For example the ```ping-pong-manager``` will do a GET request to ```http://pong:3000```.
+All services use the service name and the service discovery mechanism form docker. For example the ```ping-pong-table``` will do a GET request to ```http://pong:3000```.
 
 Let's check if all services are running:
 
@@ -90,7 +90,7 @@ ID            NAME               REPLICAS  IMAGE                         COMMAND
 0s9upwuahval  pong               2/2       furikuri/rpi-ping-pong        --hit-chance 85
 31bsg8nx30aa  ping-pong-proxy    global    furikuri/rpi-ping-pong-proxy
 bg9omcs2p5gw  ping               2/2       furikuri/rpi-ping-pong        --hit-chance 85
-e1j2dfgey2a2  ping-pong-manager  2/2       furikuri/rpi-ping-pong        --mode server
+e1j2dfgey2a2  ping-pong-table  2/2       furikuri/rpi-ping-pong        --mode server
 ```
 
 
