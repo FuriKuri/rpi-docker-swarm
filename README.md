@@ -115,3 +115,7 @@ $ docker run -it -d -p 8080:8080 -e HOST=192.168.0.200 -v /var/run/docker.sock:/
 ```
 
 ![Ping Pong Services](https://github.com/FuriKuri/rpi-docker-swarm/raw/master/ping-pong.png "Ping Pong Services")
+
+## Task List
+- [ ] Add a service for game score visualisation 
+- [ ] Add instance id in logs to differentiate the client responses
