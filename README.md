@@ -90,7 +90,7 @@ ID            NAME               REPLICAS  IMAGE                         COMMAND
 0s9upwuahval  pong               2/2       furikuri/rpi-ping-pong        --hit-chance 85
 31bsg8nx30aa  ping-pong-proxy    global    furikuri/rpi-ping-pong-proxy
 bg9omcs2p5gw  ping               2/2       furikuri/rpi-ping-pong        --hit-chance 85
-e1j2dfgey2a2  ping-pong-table  2/2       furikuri/rpi-ping-pong        --mode server
+e1j2dfgey2a2  ping-pong-table    2/2       furikuri/rpi-ping-pong        --mode server
 ```
 
 
